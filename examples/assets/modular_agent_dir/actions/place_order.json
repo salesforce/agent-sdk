@@ -1,0 +1,43 @@
+{
+    "name": "Place Order",
+    "description": "Place an order for a product",
+    "inputs": [
+        {
+            "name": "product_id",
+            "description": "ID of the product to order",
+            "data_type": "String",
+            "required": true
+        },
+        {
+            "name": "quantity",
+            "description": "Quantity of the product",
+            "data_type": "Number",
+            "required": true
+        }
+    ],
+    "outputs": [
+        {
+            "name": "status",
+            "description": "Status of the order placement",
+            "data_type": "string",
+            "required": true
+        },
+        {
+            "name": "order_id",
+            "description": "Unique identifier for the order",
+            "data_type": "string",
+            "required": true
+        },
+        {
+            "name": "message",
+            "description": "Status message for the order",
+            "data_type": "string",
+            "required": true
+        }
+    ],
+    "example_output": {
+        "status": "success",
+        "order_id": "12345",
+        "message": "Order placed successfully"
+    }
+} 

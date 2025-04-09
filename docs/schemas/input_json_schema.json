@@ -1,0 +1,205 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgentForce Agent Configuration Schema",
+  "description": "Schema for defining a complete Salesforce AgentForce agent with topics, actions, and other configuration elements",
+  "type": "object",
+  "required": ["name", "description", "agent_type", "company_name"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the agent"
+    },
+    "description": {
+      "type": "string",
+      "description": "A detailed description of the agent's purpose and capabilities"
+    },
+    "agent_type": {
+      "type": "string",
+      "description": "The type of agent",
+      "enum": ["Bot", "External", "Internal"]
+    },
+    "agent_template_type": {
+      "type": "string",
+      "description": "The template type of the agent",
+      "enum": ["EinsteinServiceAgent", "custom"]
+    },
+    "company_name": {
+      "type": "string",
+      "description": "Name of the company the agent belongs to"
+    },
+    "domain": {
+      "type": "string",
+      "description": "The domain or industry the agent operates in"
+    },
+    "sample_utterances": {
+      "type": "array",
+      "description": "Example phrases or questions the agent can handle",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "variables": {
+      "type": "array",
+      "description": "Variables used by the agent for tracking state or configuration",
+      "items": {
+        "type": "object",
+        "required": ["name", "data_type"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the variable"
+          },
+          "data_type": {
+            "type": "string",
+            "description": "Data type of the variable",
+            "enum": ["string", "String", "number", "Number", "boolean", "Boolean", "object", "Object", "array", "Array"]
+          },
+          "default_value": {
+            "description": "Default value for the variable"
+          },
+          "var_type": {
+            "type": "string",
+            "description": "Type of the variable",
+            "enum": ["custom", "system"]
+          }
+        }
+      }
+    },
+    "system_messages": {
+      "type": "array",
+      "description": "System messages used by the agent",
+      "items": {
+        "type": "object",
+        "required": ["message", "msg_type"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Content of the system message"
+          },
+          "msg_type": {
+            "type": "string",
+            "description": "Type of the system message",
+            "enum": ["welcome", "error", "system"]
+          }
+        }
+      }
+    },
+    "topics": {
+      "type": "array",
+      "description": "Topics or categories of functionality the agent provides",
+      "items": {
+        "type": "object",
+        "required": ["name", "description", "scope"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the topic"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of what this topic handles"
+          },
+          "scope": {
+            "type": "string",
+            "description": "Scope of the topic (public or private)"
+          },
+          "instructions": {
+            "type": "array",
+            "description": "Guidelines for the agent on how to handle this topic",
+            "items": {
+              "type": "string"
+            }
+          },
+          "actions": {
+            "type": "array",
+            "description": "Actions or functions available within this topic",
+            "items": {
+              "type": "object",
+              "required": ["name", "inputs", "example_output"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the action"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of what the action does"
+                },
+                "inputs": {
+                  "type": "array",
+                  "description": "Input parameters for the action",
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "description", "data_type"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the input parameter"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Description of the input parameter"
+                      },
+                      "data_type": {
+                        "type": "string",
+                        "description": "Data type of the input parameter",
+                        "enum": ["string", "String", "number", "Number", "boolean", "Boolean", "object", "Object", "array", "Array", "Date", "Time"]
+                      },
+                      "required": {
+                        "type": "boolean",
+                        "description": "Whether the input parameter is required",
+                        "default": true
+                      }
+                    }
+                  }
+                },
+                "outputs": {
+                  "type": "array",
+                  "description": "Output parameters for the action",
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "description", "data_type"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the output parameter"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Description of the output parameter"
+                      },
+                      "data_type": {
+                        "type": "string",
+                        "description": "Data type of the output parameter",
+                        "enum": ["string", "String", "number", "Number", "boolean", "Boolean", "object", "Object", "array", "Array"]
+                      },
+                      "required": {
+                        "type": "boolean",
+                        "description": "Whether the output parameter is required",
+                        "default": true
+                      }
+                    }
+                  }
+                },
+                "example_output": {
+                  "type": "object",
+                  "description": "Example of what the action's output looks like",
+                  "required": ["status"],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Status of the action execution",
+                      "enum": ["success", "error"]
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+} 

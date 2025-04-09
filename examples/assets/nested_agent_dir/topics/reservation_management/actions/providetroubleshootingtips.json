@@ -1,0 +1,17 @@
+{
+  "name": "provideTroubleshootingTips",
+  "description": "Provide helpful troubleshooting suggestions for common reservation issues",
+  "inputs": [
+    {
+      "name": "issue",
+      "description": "Description of the reservation issue",
+      "data_type": "string"
+    }
+  ],
+  "example_output": {
+    "tips": [
+      "Ensure the reservation ID is correct",
+      "Check that the reservation is for the correct date"
+    ]
+  }
+} 

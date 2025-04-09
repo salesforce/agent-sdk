@@ -1,0 +1,241 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgentForce Modular Directory Structure Schema",
+  "description": "Schema for defining the structure of a modular directory for AgentForce agents",
+  "type": "object",
+  "properties": {
+    "agents_directory": {
+      "type": "object",
+      "description": "The agents directory containing agent JSON files",
+      "additionalProperties": {
+        "$ref": "#/definitions/agent_json_file"
+      }
+    },
+    "topics_directory": {
+      "type": "object",
+      "description": "The topics directory containing topic JSON files",
+      "additionalProperties": {
+        "$ref": "#/definitions/topic_json_file"
+      }
+    },
+    "actions_directory": {
+      "type": "object",
+      "description": "The actions directory containing action JSON files",
+      "additionalProperties": {
+        "$ref": "#/definitions/action_json_file"
+      }
+    }
+  },
+  "required": ["agents_directory", "topics_directory", "actions_directory"],
+  "definitions": {
+    "agent_json_file": {
+      "type": "object",
+      "description": "A JSON file defining an agent",
+      "required": ["name", "description", "agent_type", "company_name", "topics"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the agent"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the agent's purpose"
+        },
+        "agent_type": {
+          "type": "string",
+          "description": "Type of the agent",
+          "enum": ["Bot", "External", "Internal"]
+        },
+        "agent_template_type": {
+          "type": "string",
+          "description": "Template type of the agent",
+          "enum": ["EinsteinServiceAgent", "custom"]
+        },
+        "company_name": {
+          "type": "string",
+          "description": "Name of the company"
+        },
+        "sample_utterances": {
+          "type": "array",
+          "description": "Example utterances the agent can handle",
+          "items": {
+            "type": "string"
+          }
+        },
+        "variables": {
+          "type": "array",
+          "description": "Variables used by the agent",
+          "items": {
+            "type": "object",
+            "required": ["name", "data_type"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the variable"
+              },
+              "data_type": {
+                "type": "string",
+                "description": "Data type of the variable"
+              },
+              "default_value": {
+                "description": "Default value for the variable"
+              },
+              "var_type": {
+                "type": "string",
+                "description": "Type of the variable",
+                "enum": ["custom", "system"]
+              }
+            }
+          }
+        },
+        "system_messages": {
+          "type": "array",
+          "description": "System messages for the agent",
+          "items": {
+            "type": "object",
+            "required": ["message", "msg_type"],
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Content of the system message"
+              },
+              "msg_type": {
+                "type": "string",
+                "description": "Type of the system message",
+                "enum": ["welcome", "error", "system"]
+              }
+            }
+          }
+        },
+        "topics": {
+          "type": "array",
+          "description": "List of topic names referenced by this agent",
+          "items": {
+            "type": "string",
+            "description": "Name of a topic file (without .json extension)"
+          }
+        }
+      }
+    },
+    "topic_json_file": {
+      "type": "object",
+      "description": "A JSON file defining a topic",
+      "required": ["name", "description", "scope", "actions"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the topic"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the topic"
+        },
+        "scope": {
+          "type": "string",
+          "description": "Scope of the topic"
+        },
+        "instructions": {
+          "type": "array",
+          "description": "Instructions for handling the topic",
+          "items": {
+            "type": "string"
+          }
+        },
+        "actions": {
+          "type": "array",
+          "description": "List of action names referenced by this topic",
+          "items": {
+            "type": "string",
+            "description": "Name of an action file (without .json extension)"
+          }
+        }
+      }
+    },
+    "action_json_file": {
+      "type": "object",
+      "description": "A JSON file defining an action",
+      "required": ["name", "description", "inputs", "example_output"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the action"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the action"
+        },
+        "inputs": {
+          "type": "array",
+          "description": "Input parameters for the action",
+          "items": {
+            "type": "object",
+            "required": ["name", "description", "data_type"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the input parameter"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the input parameter"
+              },
+              "data_type": {
+                "type": "string",
+                "description": "Data type of the input parameter"
+              },
+              "required": {
+                "type": "boolean",
+                "description": "Whether the input parameter is required",
+                "default": true
+              }
+            }
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "description": "Output parameters for the action",
+          "items": {
+            "type": "object",
+            "required": ["name", "description", "data_type"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the output parameter"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the output parameter"
+              },
+              "data_type": {
+                "type": "string",
+                "description": "Data type of the output parameter"
+              },
+              "required": {
+                "type": "boolean",
+                "description": "Whether the output parameter is required",
+                "default": true
+              }
+            }
+          }
+        },
+        "example_output": {
+          "type": "object",
+          "description": "Example output for the action",
+          "required": ["status"],
+          "properties": {
+            "status": {
+              "type": "string",
+              "description": "Status of the action execution",
+              "enum": ["success", "error"]
+            }
+          },
+          "additionalProperties": true
+        },
+        "topic": {
+          "type": "string",
+          "description": "Name of the topic this action belongs to"
+        }
+      }
+    }
+  }
+} 
