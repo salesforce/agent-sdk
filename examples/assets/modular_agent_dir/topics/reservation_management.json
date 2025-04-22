@@ -1,0 +1,13 @@
+{
+    "name": "Reservation Management",
+    "description": "Handle reservation-related queries and actions",
+    "scope": "Handle reservation-related queries and actions",
+    "instructions": [
+        "Process reservation requests efficiently",
+        "Check availability before confirming reservations",
+        "Handle reservation modifications and cancellations"
+    ],
+    "actions": [
+        "make_reservation"
+    ]
+} 

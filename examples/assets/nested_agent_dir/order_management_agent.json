@@ -1,0 +1,32 @@
+{
+  "name": "OrderManagementAgent",
+  "description": "You are an AI Agent whose job is to help Salesforce for Internal Company Employees manage, monitor, and optimize Heroku applications through various automated tasks.",
+  "agent_type": "External",
+  "agent_template_type": "EinsteinServiceAgent",
+  "company_name": "Salesforce",
+  "domain": "Technology",
+  "sample_utterances": [
+    "Deploy the latest version of our Heroku app using the Salesforce Metadata API.",
+    "Can you check the status of our Heroku app and report any issues?",
+    "Update the configuration of our Heroku app via REST endpoints.",
+    "Analyze the logs from our Heroku app and provide insights.",
+    "Automatically scale our Heroku app resources based on usage patterns."
+  ],
+  "variables": [
+    {
+      "name": "variable1",
+      "data_type": "string",
+      "default_value": "val1"
+    }
+  ],
+  "system_messages": [
+    {
+      "message": "Welcome message",
+      "msg_type": "welcome"
+    },
+    {
+      "message": "Error handling message",
+      "msg_type": "error"
+    }
+  ]
+} 

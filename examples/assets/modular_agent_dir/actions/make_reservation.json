@@ -1,0 +1,49 @@
+{
+    "name": "Make Reservation",
+    "description": "Make a reservation",
+    "inputs": [
+        {
+            "name": "date",
+            "description": "Reservation date",
+            "data_type": "Date",
+            "required": true
+        },
+        {
+            "name": "time",
+            "description": "Reservation time",
+            "data_type": "Time",
+            "required": true
+        },
+        {
+            "name": "party_size",
+            "description": "Number of people",
+            "data_type": "Number",
+            "required": true
+        }
+    ],
+    "outputs": [
+        {
+            "name": "status",
+            "description": "Status of the reservation request",
+            "data_type": "string",
+            "required": true
+        },
+        {
+            "name": "reservation_id",
+            "description": "Unique identifier for the reservation",
+            "data_type": "string",
+            "required": true
+        },
+        {
+            "name": "confirmation",
+            "description": "Confirmation message for the reservation",
+            "data_type": "string",
+            "required": true
+        }
+    ],
+    "example_output": {
+        "status": "success",
+        "reservation_id": "R123",
+        "confirmation": "Reservation confirmed"
+    }
+} 

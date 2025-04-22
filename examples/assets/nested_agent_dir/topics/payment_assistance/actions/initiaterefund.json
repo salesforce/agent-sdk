@@ -1,0 +1,17 @@
+{
+  "name": "initiateRefund",
+  "description": "Start the refund process for a specific order",
+  "inputs": [
+    {
+      "name": "orderID",
+      "description": "Order identification number for refund",
+      "data_type": "string"
+    }
+  ],
+  "example_output": {
+    "status": "success",
+    "refundID": "refund54321",
+    "amount": "100.00",
+    "currency": "USD"
+  }
+} 

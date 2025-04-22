@@ -1,0 +1,24 @@
+{
+  "name": "findReservation",
+  "description": "Search and retrieve reservation details using user ID and reservation ID",
+  "inputs": [
+    {
+      "name": "userID",
+      "description": "User identification number",
+      "data_type": "string"
+    },
+    {
+      "name": "reservationID",
+      "description": "Reservation identification number",
+      "data_type": "string"
+    }
+  ],
+  "example_output": {
+    "status": "success",
+    "reservationDetails": {
+      "reservationID": "12345",
+      "checkInDate": "2023-10-21",
+      "status": "confirmed"
+    }
+  }
+} 
