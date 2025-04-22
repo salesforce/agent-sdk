@@ -6,6 +6,9 @@
 
 A Python SDK for creating, managing, and deploying AI agents and prompt templates in Salesforce.
 
+## Terms of the use
+Use of this project with Salesforce is subject to the TERMS OF USE
+
 ## Introduction
 
 The Salesforce AgentForce SDK provides a programmatic interface to Salesforce's Agent infrastructure, allowing developers to define and interact with agents using Python code. It also includes tools for generating and managing prompt templates with Salesforce field mappings.
