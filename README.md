@@ -7,7 +7,7 @@
 A Python SDK for creating, managing, and deploying AI agents and prompt templates in Salesforce.
 
 ## Terms of the use
-Use of this project with Salesforce is subject to the TERMS OF USE
+Use of this project with Salesforce is subject to the [TERMS OF USE](https://github.com/salesforce/agent-sdk/blob/main/TERMS OF USE)
 
 ## Introduction
 
