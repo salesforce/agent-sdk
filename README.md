@@ -104,6 +104,47 @@ This example shows how to:
 3. Add explicit instructions and validation rules
 4. Save the enhanced template
 
+#### Template Deployment
+
+The `examples/deploy_prompt_template_example.py` script shows how to deploy a template to Salesforce:
+
+```bash
+python examples/deploy_prompt_template_example.py \
+  --username your_username \
+  --password your_password \
+  --security-token your_security_token \
+  --template-path templates/my_template.json \
+  --validate-only
+```
+
+This example demonstrates:
+1. Loading a template from a JSON file
+2. Validating the template before deployment
+3. Deploying the template and associated components
+4. Monitoring deployment status and handling errors
+
+#### Arguments
+
+Common arguments across examples:
+- `--username`: Your Salesforce username (required)
+- `--password`: Your Salesforce password (required)
+- `--security-token`: Your Salesforce security token (optional)
+- `--output_dir`: Directory to save generated files (default varies by example)
+- `--model`: Model to use for generation/tuning (default: 'gpt-4')
+
+Example-specific arguments:
+- `--template-path`: Path to an existing template JSON file (for tuning and deployment)
+- `--validate-only`: Only validate the deployment without actually deploying (deployment example)
+- `--description`: Additional context for template tuning (tuning example)
+
+#### Output
+
+The examples generate various outputs depending on their function:
+- Template JSON files with field mappings
+- Generated Apex classes for actions and queries
+- Deployment status and validation results
+- Detailed logs of operations performed
+
 ### Agent Examples
 
 The [examples](https://github.com/salesforce/agent-sdk/tree/main/examples) directory contains additional sample code for agent functionality:
@@ -167,9 +208,9 @@ agent-sdk/
 To contribute to the project:
 
 1. Clone the repository
-2. Install development dependencies: `pip install -r requirements-dev.txt`
+2. Install in editable mode: `pip install -e ".[all]"`
 3. Run tests: `pytest`
 
 ## License
 
-This project is licensed under the Apache 2.0 License - see the [LICENSE](https://github.com/salesforce/agent-sdk/blob/main/LICENSE) file for details. 
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/salesforce/agent-sdk/blob/main/LICENSE) file for details. 
