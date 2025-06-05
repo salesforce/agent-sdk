@@ -3,12 +3,11 @@
 # Function to show usage
 show_usage() {
     echo "Usage:"
-    echo "  Build and run: $0 [--build] [--test-type <type>] [--test <test_name>]"
-    echo "  Run existing: $0 --no-build [--test-type <type>] [--test <test_name>]"
+    echo "  Build and run: $0 [--build] [--test-type <type>]"
+    echo "  Run existing: $0 --no-build [--test-type <type>]"
     echo ""
     echo "Options:"
     echo "  --test-type    Type of tests to run (custom|pytest). Default: custom"
-    echo "  --test         Run a specific test by name"
     echo ""
     echo "Environment variables should be set in .env file"
     echo "Required variables:"
@@ -41,7 +40,6 @@ load_env "$ENV_FILE"
 # Default values
 BUILD=true
 TEST_TYPE="custom"
-SPECIFIC_TEST=""
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -60,14 +58,6 @@ while [[ $# -gt 0 ]]; do
                 exit 1
             fi
             TEST_TYPE="$2"
-            shift 2
-            ;;
-        --test)
-            if [ -z "$2" ]; then
-                echo "Error: --test requires a test name"
-                exit 1
-            fi
-            SPECIFIC_TEST="$2"
             shift 2
             ;;
         -h|--help)
@@ -92,16 +82,13 @@ fi
 # Echo some debug information
 echo "Running from directory: $ROOT_DIR"
 echo "Test type: $TEST_TYPE"
-if [ -n "$SPECIFIC_TEST" ]; then
-    echo "Running specific test: $SPECIFIC_TEST"
-fi
 
 cd "$ROOT_DIR"
 
 # Build the image if requested
 if [ "$BUILD" = true ]; then
     echo "Building Docker image..."
-
+    
     # Clean up any previous builds if they exist
     docker rmi salesforce-agent-tests 2>/dev/null || true
 
@@ -117,7 +104,7 @@ if [ "$BUILD" = true ]; then
     fi
 else
     echo "Skipping build, using existing Docker image..."
-
+    
     # Check if the image exists
     if ! docker image inspect salesforce-agent-tests >/dev/null 2>&1; then
         echo "Error: Docker image 'salesforce-agent-tests' not found"
@@ -130,17 +117,9 @@ echo "Running integration tests..."
 
 # Choose the test command based on TEST_TYPE
 if [ "$TEST_TYPE" = "pytest" ]; then
-    TEST_COMMAND="pytest -v -s examples/integration_tests/run_tests_pytest.py"
-    # Add specific test if provided
-    if [ -n "$SPECIFIC_TEST" ]; then
-        TEST_COMMAND="$TEST_COMMAND -k $SPECIFIC_TEST"
-    fi
+    TEST_COMMAND="pytest -v -s examples/integration_tests/test_integration_pytest.py"
 else
-    TEST_COMMAND="python -u examples/integration_tests/run_tests_custom.py"
-    # Add specific test if provided
-    if [ -n "$SPECIFIC_TEST" ]; then
-        TEST_COMMAND="$TEST_COMMAND --test $SPECIFIC_TEST"
-    fi
+    TEST_COMMAND="python -u examples/integration_tests/run_integration_tests.py"
 fi
 
 # Run the tests with interactive terminal and remove container after completion
