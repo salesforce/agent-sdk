@@ -1,0 +1,6 @@
+# Environment variables
+.env
+
+# Test results
+test_results/
+agentforce_deployments/

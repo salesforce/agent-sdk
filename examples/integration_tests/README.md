@@ -5,7 +5,7 @@ This directory contains integration tests for the AgentForce SDK examples. The t
 ## Prerequisites
 
 - Docker installed and running (only if using Docker method)
-- Python 3.9 or higher
+- Python 3.11 or higher
 - Access to a Salesforce org with appropriate credentials
 - Bash shell (for Unix/Linux/macOS) or Git Bash (for Windows)
 
@@ -30,8 +30,8 @@ vim .env
 ./run_test.sh
 
 # Direct Python execution (without Docker)
-python -u examples/integration_tests/run_integration_tests.py  # for custom tests
-pytest -v -s examples/integration_tests/test_integration_pytest.py  # for pytest
+python -u examples/integration_tests/run_tests_custom.py  # for custom tests
+pytest -v -s examples/integration_tests/run_tests_pytest.py  # for pytest
 ```
 
 ## Running Options
@@ -50,6 +50,16 @@ Uses our custom testing framework:
 Uses pytest framework with more detailed reporting:
 ```bash
 ./run_test.sh --test-type pytest
+```
+
+#### Running Specific Tests
+Run a specific test by name:
+```bash
+# For custom tests
+./run_test.sh --test create_agent_programmatically
+
+# For pytest
+./run_test.sh --test-type pytest --test create_agent_programmatically
 ```
 
 ### 2. Build Options
@@ -95,20 +105,22 @@ You can create a `.env` file in the `examples/integration_tests` directory from 
 #### Running Custom Tests
 ```bash
 # Basic run
-python -u examples/integration_tests/run_integration_tests.py
+python -u examples/integration_tests/run_tests_custom.py
 
+# Run specific test
+python -u examples/integration_tests/run_tests_custom.py --test create_agent_programmatically
 ```
 
 #### Running Pytest Tests
 ```bash
 # Basic run
-pytest -v -s examples/integration_tests/test_integration_pytest.py
+pytest -v -s examples/integration_tests/run_tests_pytest.py
 
 # With more detailed output
-pytest -v -s --tb=long --showlocals examples/integration_tests/test_integration_pytest.py
+pytest -v -s --tb=long --showlocals examples/integration_tests/run_tests_pytest.py
 
 # Run specific test
-pytest -v -s examples/integration_tests/test_integration_pytest.py -k "test_create_agent_programmatically"
+pytest -v -s examples/integration_tests/run_tests_pytest.py -k "test_create_agent_programmatically"
 
 ```
 
@@ -117,14 +129,14 @@ pytest -v -s examples/integration_tests/test_integration_pytest.py -k "test_crea
 - `.env.example` - Template for environment variables
 - `.env` - Your local environment variables (git-ignored)
 - `run_test.sh` - Main script to run the tests with Docker
-- `run_integration_tests.py` - Custom test implementation
-- `test_integration_pytest.py` - Pytest test implementation
+- `run_tests_custom.py` - Custom test implementation
+- `run_tests_pytest.py` - Pytest test implementation
 - `Dockerfile` - Defines the Docker test environment (only needed for Docker method)
 
 ## Test Environment
 
 When running with Docker:
-- Python 3.9
+- Python 3.11
 - All required dependencies installed
 - Isolated environment for reproducibility
 - Real-time test output to terminal
@@ -134,4 +146,3 @@ When running directly:
 - Requires manual dependency installation
 - Faster execution (no Docker overhead)
 - Better for debugging and development
-
