@@ -21,16 +21,27 @@
             "msg_type": "system"
         }
     ],
+    
     "variables": [
         {
             "name": "customer_id",
-            "data_type": "String",
-            "default_value": "",
-            "var_type": "custom"
+            "developer_name": "customer_id",
+            "label": "Customer ID",
+            "data_type": "Text",
+            "visibility": "Internal",
+            "var_type": "conversation"
+        },
+        {
+            "name": "current_session_id",
+            "developer_name": "current_session_id",
+            "label": "Current Session ID",
+            "data_type": "Text",
+            "visibility": "Internal",
+            "var_type": "conversation"
         }
     ],
     "topics": [
         "order_management",
         "reservation_management"
     ]
-} 
+}

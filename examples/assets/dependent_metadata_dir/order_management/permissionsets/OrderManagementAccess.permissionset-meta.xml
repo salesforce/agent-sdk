@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants access to Order Management Service for Agent operations</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Order Management Access</label>
+    <classAccesses>
+        <apexClass>OrderManagementService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+</PermissionSet> 

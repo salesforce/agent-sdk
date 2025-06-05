@@ -192,4 +192,4 @@
     }
   },
   "required": ["agent_json_file", "topics_directory"]
-} 
+}

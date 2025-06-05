@@ -50,10 +50,22 @@
             "type": "string",
             "description": "Name of the variable"
           },
+          "developer_name": {
+            "type": "string",
+            "description": "Developer name for the variable (used in Salesforce metadata)"
+          },
+          "label": {
+            "type": "string",
+            "description": "Human-readable label for the variable"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the variable's purpose"
+          },
           "data_type": {
             "type": "string",
             "description": "Data type of the variable",
-            "enum": ["string", "String", "number", "Number", "boolean", "Boolean", "object", "Object", "array", "Array"]
+            "enum": ["Text", "Boolean"]
           },
           "default_value": {
             "description": "Default value for the variable"
@@ -61,7 +73,17 @@
           "var_type": {
             "type": "string",
             "description": "Type of the variable",
-            "enum": ["custom", "system"]
+            "enum": ["conversation", "context"]
+          },
+          "visibility": {
+            "type": "string",
+            "description": "Visibility of the variable",
+            "enum": ["Internal", "External", "Public", "Private"]
+          },
+          "include_in_prompt": {
+            "type": "boolean",
+            "description": "Whether to include this variable in the agent's prompt",
+            "default": false
           }
         }
       }
@@ -194,6 +216,29 @@
                     }
                   },
                   "additionalProperties": true
+                },
+                "attribute_mappings": {
+                  "type": "array",
+                  "description": "Mappings between action parameters and agent variables",
+                  "items": {
+                    "type": "object",
+                    "required": ["action_parameter", "variable_name", "direction"],
+                    "properties": {
+                      "action_parameter": {
+                        "type": "string",
+                        "description": "Name of the action parameter (input or output) to map"
+                      },
+                      "variable_name": {
+                        "type": "string",
+                        "description": "Name of the agent variable to map to/from"
+                      },
+                      "direction": {
+                        "type": "string",
+                        "description": "Direction of the mapping",
+                        "enum": ["input", "output"]
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -202,4 +247,4 @@
       }
     }
   }
-} 
+}

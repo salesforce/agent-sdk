@@ -1,0 +1,418 @@
+{
+  "name": "Customer Service Agent",
+  "description": "A comprehensive customer service agent that maintains context across interactions using attribute mappings",
+  "agent_type": "External",
+  "agent_template_type": "EinsteinServiceAgent",
+  "company_name": "Example Corp",
+  "domain": "Customer Service",
+  "sample_utterances": [
+    "I want to place an order",
+    "Check my order status",
+    "I need help with my account",
+    "What's my current balance?",
+    "Update my contact information"
+  ],
+  "variables": [
+    {
+      "name": "customer_id",
+      "developer_name": "customer_id",
+      "label": "Customer ID",
+      "description": "Unique identifier for the customer",
+      "data_type": "Text",
+      "visibility": "Internal",
+      "var_type": "conversation",
+      "include_in_prompt": true
+    },
+    {
+      "name": "customer_name",
+      "developer_name": "customer_name",
+      "label": "Customer Name",
+      "description": "Full name of the customer",
+      "data_type": "Text",
+      "visibility": "Internal",
+      "var_type": "conversation",
+      "include_in_prompt": true
+    },
+    {
+      "name": "current_order_id",
+      "developer_name": "current_order_id",
+      "label": "Current Order ID",
+      "description": "ID of the customer's most recent order",
+      "data_type": "Text",
+      "visibility": "Internal",
+      "var_type": "conversation",
+      "include_in_prompt": false
+    },
+    {
+      "name": "account_balance",
+      "developer_name": "account_balance",
+      "label": "Account Balance",
+      "description": "Current account balance for the customer",
+      "data_type": "Text",
+      "visibility": "Internal",
+      "var_type": "conversation",
+      "include_in_prompt": false
+    },
+    {
+      "name": "is_premium_customer",
+      "developer_name": "is_premium_customer",
+      "label": "Premium Customer Status",
+      "description": "Whether the customer has premium status",
+      "data_type": "Boolean",
+      "visibility": "Internal",
+      "var_type": "context",
+      "include_in_prompt": true
+    }
+  ],
+  "system_messages": [
+    {
+      "message": "Welcome! I'm here to help you with your orders, account, and any questions you might have.",
+      "msg_type": "welcome"
+    },
+    {
+      "message": "I apologize, but I encountered an error. Let me try to help you in a different way.",
+      "msg_type": "error"
+    }
+  ],
+  "topics": [
+    {
+      "name": "Order Management",
+      "description": "Handle order placement, tracking, and management",
+      "scope": "Handle all order-related customer requests",
+      "instructions": [
+        "Always verify customer identity before processing orders",
+        "Use stored customer information to streamline the ordering process",
+        "Store order IDs for future reference in the conversation",
+        "Provide clear order confirmation and tracking information"
+      ],
+      "actions": [
+        {
+          "name": "placeOrder",
+          "description": "Place a new order for the customer",
+          "inputs": [
+            {
+              "name": "customer_id",
+              "description": "ID of the customer placing the order",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "product_id",
+              "description": "ID of the product to order",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "quantity",
+              "description": "Quantity of the product to order",
+              "data_type": "number",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "name": "order_id",
+              "description": "Unique identifier for the created order",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "total_amount",
+              "description": "Total amount for the order",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "status",
+              "description": "Status of the order placement",
+              "data_type": "string",
+              "required": true
+            }
+          ],
+          "attribute_mappings": [
+            {
+              "action_parameter": "customer_id",
+              "variable_name": "customer_id",
+              "direction": "input"
+            },
+            {
+              "action_parameter": "order_id",
+              "variable_name": "current_order_id",
+              "direction": "output"
+            }
+          ],
+          "example_output": {
+            "order_id": "ORD-12345",
+            "total_amount": "$99.99",
+            "status": "confirmed"
+          }
+        },
+        {
+          "name": "checkOrderStatus",
+          "description": "Check the status of an existing order",
+          "inputs": [
+            {
+              "name": "order_id",
+              "description": "ID of the order to check",
+              "data_type": "string",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "name": "status",
+              "description": "Current status of the order",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "tracking_number",
+              "description": "Tracking number for the order",
+              "data_type": "string",
+              "required": false
+            },
+            {
+              "name": "estimated_delivery",
+              "description": "Estimated delivery date",
+              "data_type": "string",
+              "required": false
+            }
+          ],
+          "attribute_mappings": [
+            {
+              "action_parameter": "order_id",
+              "variable_name": "current_order_id",
+              "direction": "input"
+            }
+          ],
+          "example_output": {
+            "status": "shipped",
+            "tracking_number": "1Z999AA1234567890",
+            "estimated_delivery": "2024-03-25"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Account Management",
+      "description": "Handle customer account information and updates",
+      "scope": "Manage customer account details, preferences, and information",
+      "instructions": [
+        "Always verify customer identity before showing account information",
+        "Store updated customer information for use throughout the conversation",
+        "Protect sensitive account information and follow privacy guidelines"
+      ],
+      "actions": [
+        {
+          "name": "getAccountInfo",
+          "description": "Retrieve customer account information",
+          "inputs": [
+            {
+              "name": "customer_id",
+              "description": "ID of the customer",
+              "data_type": "string",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "name": "customer_name",
+              "description": "Full name of the customer",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "account_balance",
+              "description": "Current account balance",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "account_status",
+              "description": "Status of the customer account",
+              "data_type": "string",
+              "required": true
+            }
+          ],
+          "attribute_mappings": [
+            {
+              "action_parameter": "customer_id",
+              "variable_name": "customer_id",
+              "direction": "input"
+            },
+            {
+              "action_parameter": "customer_name",
+              "variable_name": "customer_name",
+              "direction": "output"
+            },
+            {
+              "action_parameter": "account_balance",
+              "variable_name": "account_balance",
+              "direction": "output"
+            }
+          ],
+          "example_output": {
+            "customer_name": "John Smith",
+            "account_balance": "$150.00",
+            "account_status": "active"
+          }
+        },
+        {
+          "name": "updateContactInfo",
+          "description": "Update customer contact information",
+          "inputs": [
+            {
+              "name": "customer_id",
+              "description": "ID of the customer",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "email",
+              "description": "New email address",
+              "data_type": "string",
+              "required": false
+            },
+            {
+              "name": "phone",
+              "description": "New phone number",
+              "data_type": "string",
+              "required": false
+            }
+          ],
+          "outputs": [
+            {
+              "name": "status",
+              "description": "Status of the update operation",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "updated_fields",
+              "description": "List of fields that were updated",
+              "data_type": "array",
+              "required": true
+            }
+          ],
+          "attribute_mappings": [
+            {
+              "action_parameter": "customer_id",
+              "variable_name": "customer_id",
+              "direction": "input"
+            }
+          ],
+          "example_output": {
+            "status": "success",
+            "updated_fields": ["email", "phone"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Support",
+      "description": "Handle customer support requests and issue resolution",
+      "scope": "Provide technical support and resolve customer issues",
+      "instructions": [
+        "Create support tickets for complex issues that require follow-up",
+        "Provide clear ticket information to customers for future reference",
+        "Escalate to human agents when necessary"
+      ],
+      "actions": [
+        {
+          "name": "createSupportTicket",
+          "description": "Create a new support ticket for the customer",
+          "inputs": [
+            {
+              "name": "customer_id",
+              "description": "ID of the customer",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "issue_description",
+              "description": "Description of the customer's issue",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "priority",
+              "description": "Priority level of the issue",
+              "data_type": "string",
+              "required": false
+            }
+          ],
+          "outputs": [
+            {
+              "name": "ticket_id",
+              "description": "Unique identifier for the support ticket",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "status",
+              "description": "Initial status of the ticket",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "assigned_agent",
+              "description": "Name of the assigned support agent",
+              "data_type": "string",
+              "required": false
+            }
+          ],
+          "attribute_mappings": [
+            {
+              "action_parameter": "customer_id",
+              "variable_name": "customer_id",
+              "direction": "input"
+            }
+          ],
+          "example_output": {
+            "ticket_id": "TICKET-78901",
+            "status": "open",
+            "assigned_agent": "Sarah Johnson"
+          }
+        },
+        {
+          "name": "checkTicketStatus",
+          "description": "Check the status of an existing support ticket",
+          "inputs": [
+            {
+              "name": "ticket_id",
+              "description": "ID of the support ticket",
+              "data_type": "string",
+              "required": true
+            }
+          ],
+          "outputs": [
+            {
+              "name": "status",
+              "description": "Current status of the ticket",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "last_update",
+              "description": "Last update on the ticket",
+              "data_type": "string",
+              "required": true
+            },
+            {
+              "name": "resolution",
+              "description": "Resolution details if ticket is closed",
+              "data_type": "string",
+              "required": false
+            }
+          ],
+          "attribute_mappings": [],
+          "example_output": {
+            "status": "in_progress",
+            "last_update": "Agent is investigating the issue",
+            "resolution": null
+          }
+        }
+      ]
+    }
+  ]
+} 
