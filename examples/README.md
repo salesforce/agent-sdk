@@ -80,7 +80,12 @@ python examples/generate_prompt_template_example.py --username your_username --p
     - Shows how to run an agent and have a conversation
     - Demonstrates session management
 
-11. **api_server_example.py**
+11. **create_agent_with_dependent_metadata.py**
+    - Demonstrates how to use custom Salesforce metadata with agents
+    - Shows the --dependent-metadata feature for CLI and programmatic usage
+    - Includes validation and examples of custom Apex classes
+
+12. **api_server_example.py**
     - Demonstrates running an API server for agent interactions
     - Shows how to handle agent requests via HTTP
 
@@ -141,15 +146,52 @@ python examples/create_agent_programmatically.py --username your_username --pass
 This example demonstrates how to interact with an existing agent using the SDK.
 
 ```bash
-python examples/run_agent.py --username your_username --password your_password 
+python examples/run_agent.py --username your_username --password your_password
 ```
 
-### 5. Create and Deploy Agent (`run_create_agent.py`)
+### 5. Using Custom Metadata with Agents (`create_agent_with_dependent_metadata.py`)
 
-This is a comprehensive example that creates an agent with multiple topics and actions, then deploys it to Salesforce.
+This example demonstrates the powerful `--dependent-metadata` feature, which allows you to use your own custom Salesforce metadata instead of the default template classes.
 
+**Key Benefits:**
+- Use your organization's existing Apex classes, flows, and other metadata
+- Maintain consistent coding standards and organizational patterns
+- Deploy complex integrations and customizations
+- Leverage existing business logic and integrations
+
+**CLI Usage:**
 ```bash
-python examples/run_create_agent.py --username your_username --password your_password --company_name "Your Company"
+# Create agent with custom metadata
+python -m agent_sdk.cli create \
+    --username your_username \
+    --password your_password \
+    --agent-file examples/assets/input.json \
+    --dependent-metadata examples/assets/dependent_metadata_dir/order_management \
+    --deploy
+```
+
+**Programmatic Usage:**
+```python
+from agent_sdk import AgentUtils
+
+# Create agent with custom metadata
+agent = AgentUtils.create_agent_from_dict(
+    agent_data,
+    dependent_metadata_dir="examples/assets/dependent_metadata_dir/order_management"
+)
+```
+
+**Sample Metadata:**
+The `assets/dependent_metadata_dir/` directory contains example metadata structures:
+- `order_management/` - Example with custom Apex classes for order management
+
+**Requirements:**
+- Your metadata directory must contain `package.xml`
+- Any Salesforce metadata type is supported (classes, flows, objects, etc.)
+
+Run the example:
+```bash
+python examples/create_agent_with_dependent_metadata.py
 ```
 
 ### 6. Jupyter Notebooks (`notebooks/`)
@@ -221,4 +263,4 @@ You can also export an existing agent to this modular structure:
 
 ```python
 AgentUtils.export_agent_to_modular_files(agent.to_dict(), "path/to/export_directory")
-``` 
+```

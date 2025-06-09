@@ -1,30 +1,42 @@
 {
     "name": "Make Reservation",
-    "description": "Make a reservation",
+    "description": "Make a reservation for a service or booking",
     "inputs": [
         {
+            "name": "service_type",
+            "description": "Type of service to reserve",
+            "data_type": "String",
+            "required": true
+        },
+        {
             "name": "date",
-            "description": "Reservation date",
-            "data_type": "Date",
+            "description": "Date for the reservation",
+            "data_type": "String",
             "required": true
         },
         {
             "name": "time",
-            "description": "Reservation time",
-            "data_type": "Time",
+            "description": "Time for the reservation",
+            "data_type": "String",
             "required": true
         },
         {
-            "name": "party_size",
-            "description": "Number of people",
-            "data_type": "Number",
+            "name": "customer_id",
+            "description": "ID of the customer making the reservation",
+            "data_type": "String",
             "required": true
+        },
+        {
+            "name": "session_id",
+            "description": "Current session identifier",
+            "data_type": "String",
+            "required": false
         }
     ],
     "outputs": [
         {
             "name": "status",
-            "description": "Status of the reservation request",
+            "description": "Status of the reservation",
             "data_type": "string",
             "required": true
         },
@@ -35,15 +47,44 @@
             "required": true
         },
         {
-            "name": "confirmation",
-            "description": "Confirmation message for the reservation",
-            "data_type": "string",
+            "name": "confirmation_details",
+            "description": "Details of the confirmed reservation",
+            "data_type": "object",
             "required": true
+        },
+        {
+            "name": "updated_session_id",
+            "description": "Updated session identifier after reservation",
+            "data_type": "string",
+            "required": false
         }
     ],
     "example_output": {
-        "status": "success",
-        "reservation_id": "R123",
-        "confirmation": "Reservation confirmed"
-    }
-} 
+        "status": "confirmed",
+        "reservation_id": "res_12345",
+        "confirmation_details": {
+            "service": "Restaurant",
+            "date": "2024-01-20",
+            "time": "7:00 PM",
+            "party_size": 4
+        },
+        "updated_session_id": "session_67890"
+    },
+    "attribute_mappings": [
+        {
+            "action_parameter": "customer_id",
+            "variable_name": "customer_id",
+            "direction": "input"
+        },
+        {
+            "action_parameter": "session_id",
+            "variable_name": "current_session_id",
+            "direction": "input"
+        },
+        {
+            "action_parameter": "updated_session_id",
+            "variable_name": "current_session_id",
+            "direction": "output"
+        }
+    ]
+}

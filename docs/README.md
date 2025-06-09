@@ -8,6 +8,10 @@ This directory contains comprehensive documentation and JSON schema files for th
 
 - **[api_documentation.md](api_documentation.md)**: Comprehensive API documentation for the Salesforce AgentForce SDK, covering all major classes, methods, and usage patterns.
 
+### Examples
+
+- **[attribute_mappings_example.json](attribute_mappings_example.json)**: Comprehensive example demonstrating attribute mappings usage across multiple topics and actions.
+
 ### JSON Schemas
 
 - **[schemas/input_json_schema.json](schemas/input_json_schema.json)**: JSON schema for validating agent definitions in a single JSON file.
@@ -21,6 +25,7 @@ This directory contains comprehensive documentation and JSON schema files for th
 The API documentation provides a comprehensive guide to using the Salesforce AgentForce SDK. It covers:
 
 - Core components (Agentforce, Models, Utilities)
+- Attribute mappings (connecting action parameters to agent variables)
 - Working with agents (Creating, Retrieving, Updating, Deleting, Exporting)
 - Directory structures (Single JSON File, Nested, Modular)
 - Examples
@@ -85,4 +90,4 @@ agent_dir/
 
 ## Examples
 
-For more examples, please refer to the `examples` directory in the SDK repository. 
+For more examples, please refer to the `examples` directory in the SDK repository.

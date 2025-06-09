@@ -1,10 +1,16 @@
 {
     "name": "Check Order Status",
-    "description": "Check the status of an order",
+    "description": "Check the status of an existing order",
     "inputs": [
         {
             "name": "order_id",
             "description": "ID of the order to check",
+            "data_type": "String",
+            "required": true
+        },
+        {
+            "name": "customer_id",
+            "description": "ID of the customer who placed the order",
             "data_type": "String",
             "required": true
         }
@@ -12,26 +18,37 @@
     "outputs": [
         {
             "name": "status",
-            "description": "Status of the status check request",
+            "description": "Current status of the order",
             "data_type": "string",
             "required": true
         },
         {
-            "name": "order_status",
-            "description": "Current status of the order",
-            "data_type": "string",
+            "name": "order_details",
+            "description": "Details of the order",
+            "data_type": "object",
             "required": true
         },
         {
             "name": "estimated_delivery",
             "description": "Estimated delivery date",
             "data_type": "string",
-            "required": true
+            "required": false
         }
     ],
     "example_output": {
-        "status": "success",
-        "order_status": "processing",
-        "estimated_delivery": "2024-03-20"
-    }
-} 
+        "status": "shipped",
+        "order_details": {
+            "order_id": "12345",
+            "product": "Widget",
+            "quantity": 2
+        },
+        "estimated_delivery": "2024-01-15"
+    },
+    "attribute_mappings": [
+        {
+            "action_parameter": "customer_id",
+            "variable_name": "customer_id",
+            "direction": "input"
+        }
+    ]
+}

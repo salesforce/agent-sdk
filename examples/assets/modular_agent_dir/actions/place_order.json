@@ -13,6 +13,12 @@
             "description": "Quantity of the product",
             "data_type": "Number",
             "required": true
+        },
+        {
+            "name": "customer_id",
+            "description": "ID of the customer placing the order",
+            "data_type": "String",
+            "required": true
         }
     ],
     "outputs": [
@@ -39,5 +45,12 @@
         "status": "success",
         "order_id": "12345",
         "message": "Order placed successfully"
-    }
-} 
+    },
+    "attribute_mappings": [
+        {
+            "action_parameter": "customer_id",
+            "variable_name": "customer_id",
+            "direction": "input"
+        }
+    ]
+}
