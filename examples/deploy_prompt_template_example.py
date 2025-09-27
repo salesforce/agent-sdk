@@ -10,7 +10,7 @@ import logging
 # Add parent directory to Python path so we can import agent_sdk directly
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from agent_sdk.core.prompt_template_utils import PromptTemplateUtils
+from agent_sdk.utils.prompt_templates.prompt_template_utils import PromptTemplateUtils
 from agent_sdk.core.auth import BasicAuth
 from agent_sdk.core.base import AgentforceBase
 
