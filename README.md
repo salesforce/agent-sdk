@@ -163,7 +163,7 @@ The [examples](https://github.com/salesforce/agent-sdk/tree/main/examples) direc
 ```python
 from agent_sdk import Agentforce
 from agent_sdk.core.auth import BasicAuth
-from agent_sdk.core.prompt_template_utils import PromptTemplateUtils
+from agent_sdk.utils.prompt_templates.prompt_template_utils import PromptTemplateUtils
 
 # Initialize authentication
 auth = BasicAuth(username="your_username", password="your_password")
